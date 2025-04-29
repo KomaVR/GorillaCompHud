@@ -9,26 +9,18 @@ on:
 
 jobs:
   build:
-    name: Build GorillaBlackOpsHUD.dll
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
-        with:
-          vs-version: 'latest'
 
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v2
-
-      - name: Restore NuGet packages
-        run: nuget restore GorillaBlackOpsHUD.sln || echo "No solution, continuing"
-
-      - name: Build Project
-        run: msbuild GorillaBlackOpsHUD.csproj /t:Rebuild /p:Configuration=Release /p:Platform="Any CPU"
+      - name: Build GorillaBlackOpsHUD
+        run: |
+          msbuild GorillaBlackOpsHUD.csproj /p:Configuration=Release /p:Platform="Any CPU" /t:Rebuild
 
       - name: Upload DLL
         uses: actions/upload-artifact@v4

@@ -10,12 +10,12 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
-  <!-- Grab every .dll from Dependencies/ -->
+  <!-- Glob all your dependency DLLs -->
   <ItemGroup>
     <DependencyDlls Include="Dependencies\*.dll" />
   </ItemGroup>
 
-  <!-- Expand them into proper <Reference> entries -->
+  <!-- Turn those into real references -->
   <ItemGroup>
     <Reference Include="@(DependencyDlls->'%(Filename)')">
       <HintPath>%(DependencyDlls.Identity)</HintPath>
@@ -23,9 +23,5 @@
     </Reference>
   </ItemGroup>
 
-  <!-- Your single source file -->
-  <ItemGroup>
-    <!-- SDK will pick up Main.cs implicitly, but if you want to be explicit: -->
-    <Compile Include="Main.cs" />
-  </ItemGroup>
+  <!-- NO explicit <Compile> entries here! -->
 </Project>

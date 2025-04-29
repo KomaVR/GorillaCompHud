@@ -1,54 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <!-- Target Unity’s .NET Framework version -->
+    <!-- Unity’s .NET Framework -->
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
-    <AssemblyName>GorillaBlackOpsHUD</AssemblyName>
     <RootNamespace>GorillaBlackOpsHUD</RootNamespace>
-    <!-- Copy the MelonLoader metadata into the DLL so the loader can pick it up -->
+    <AssemblyName>GorillaBlackOpsHUD</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Reference all dependencies from the local folder -->
-    <Reference Include="MelonLoader">
-      <HintPath>Dependencies\MelonLoader.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>Dependencies\0Harmony.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>Dependencies\UnityEngine.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>Dependencies\UnityEngine.CoreModule.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <!-- Game-specific assemblies -->
-    <Reference Include="GorillaTagAssembly">
-      <HintPath>Dependencies\GorillaTagAssembly.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="PhotonRealtime">
-      <HintPath>Dependencies\PhotonRealtime.dll</HintPath>
+    <!-- include every DLL under Dependencies/ as a reference -->
+    <DependencyDlls Include="Dependencies\*.dll" />
+    <Reference Include="%(DependencyDlls.Filename)">
+      <HintPath>%(DependencyDlls.Identity)</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Your single source file -->
     <Compile Include="Main.cs" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <!-- Ensure Release build outputs to a known folder -->
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-    <Platform Target="AnyCPU" />
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-  </PropertyGroup>
-
 </Project>

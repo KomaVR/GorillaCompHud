@@ -10,9 +10,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: microsoft/setup-msbuild@v2
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore NuGet (even though we only have file refs)
+        run: dotnet restore GorillaBlackOpsHUD.csproj
 
       - name: Build DLL
         run: msbuild GorillaBlackOpsHUD.csproj /p:Configuration=Release /p:Platform="Any CPU" /t:Rebuild
